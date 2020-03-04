@@ -3,6 +3,7 @@
             [graphclj.tools :as tools]))
 
 ;; Generate a graph from the lines
+;; Il doit certainement il y'avoir une façon plus jolie de faire 
 (defn gen-graph [lines]
   "Returns a hashmap contating the graph"
   (loop [my-lines lines
@@ -18,12 +19,20 @@
                                      (update-in res (vector b) #(assoc % :neigh (conj (get % :neigh) a)))))))
       res)))
 
+;; ça me semble ok
 (defn erdos-renyi-rnd [n,p]
   "Returns a G_{n,p} random graph, also known as an Erdős-Rényi graph"
-  (loop [res {}]
-    (for [i (range n)]
-      (assoc res i {:neigh (set (random-sample p (range n)))}))))
+  (loop [res {}
+         ite (range n)]
+    (if (seq ite)
+      (recur (assoc res (first ite) {:neigh (set (random-sample p (range n)))}) (rest ite))
+      res)))
 
 ;; random-sample -----> The output of random-sample is a sequence.
 ;; Each element of the original collection has probability "prob"
 ;; of being included in the output sequence.
+
+;; Quelques tests en plus
+(gen-graph (tools/readfile "/home/elias/Documents/3I020/graphcljskel/src/graphclj/testsgraphe.txt"))
+(erdos-renyi-rnd 5 0.9)
+
