@@ -36,7 +36,7 @@
 (defn closeness [g n]
   "Returns the closeness for node n in graph g"
   (let [d (distance g n)]
-    (reduce + (mapv #(/ 1 %) (filter #(> % 0) (vals (distance g n)))))))
+    (float (reduce + (mapv #(/ 1 %) (filter #(> % 0) (vals (distance g n))))))))
 
 
 (defn closeness-all [g]
