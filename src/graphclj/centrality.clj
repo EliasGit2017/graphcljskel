@@ -12,15 +12,6 @@
       (recur (rest my-g) (assoc-in res (vector (ffirst my-g) :degree) (count (first (vals (second (first my-g)))))))
       res)))
 
-(defn not-visited
-  [d]
-  (loop [res []
-         ite 0]
-    (if (< ite (count d))
-      (recur (if (>= (nth d ite) 1)
-               (conj res ite)
-               res) (inc ite))
-      res)))
 
 ;; Essai avec Parcours en largeur simple (Car les coûts entre les noeuds sont identiques)
 (defn distance [g n]
@@ -39,8 +30,7 @@
                               (recur (rest succ) d tmp))
                             [d tmp]))]
             (recur t1 t2)))
-      d)))
-
+      (zipmap (range (count d)) d))))
 
 (defn closeness [g n]
   "Returns the closeness for node n in graph g")
