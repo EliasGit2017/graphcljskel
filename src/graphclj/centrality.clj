@@ -32,11 +32,19 @@
             (recur t1 t2)))
       (zipmap (range (count d)) d))))
 
+
 (defn closeness [g n]
-  "Returns the closeness for node n in graph g")
+  "Returns the closeness for node n in graph g"
+  (let [d (distance g n)]
+    (reduce + (mapv #(/ 1 %) (filter #(> % 0) (vals (distance g n)))))))
 
 
 (defn closeness-all [g]
-  "Returns the closeness for all nodes in graph g")
+  "Returns the closeness for all nodes in graph g"
+(loop [my-g g
+         res g]
+    (if (seq my-g)
+      (recur (rest my-g) (assoc-in res (vector (ffirst my-g) :close) (closeness g (ffirst my-g))))
+      res)))
 
 
