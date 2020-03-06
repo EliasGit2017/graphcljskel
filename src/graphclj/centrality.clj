@@ -3,7 +3,6 @@
             [clojure.set :as set]))
 
 
-
 ;; Remplacer par quelque chose de meilleur en taille de code et complexité.
 (defn degrees [g]
   "Calculates the degree centrality for each node"
@@ -13,8 +12,35 @@
       (recur (rest my-g) (assoc-in res (vector (ffirst my-g) :degree) (count (first (vals (second (first my-g)))))))
       res)))
 
+(defn not-visited
+  [d]
+  (loop [res []
+         ite 0]
+    (if (< ite (count d))
+      (recur (if (>= (nth d ite) 1)
+               (conj res ite)
+               res) (inc ite))
+      res)))
+
+;; Essai avec Parcours en largeur simple (Car les coûts entre les noeuds sont identiques)
 (defn distance [g n]
-  "Calculate the distances of one node to all the others")
+  "Calculate the distances of one node to all the others"
+  (loop [d (assoc (into [] (take (count (keys g)) (repeat -1))) n 0)
+         F [n]]
+    (if (seq F)
+      (do (let [x (first F)
+                [t1 t2] (loop [succ (get (get g x) :neigh)
+                               d d
+                               tmp (into [] (rest F))]
+                          (if (seq succ)
+                            (if (= (nth d (first succ)) -1)
+                              (do (println "tableau tmp:" tmp (first succ) d)
+                                  (recur (rest succ) (assoc d (first succ) (inc (nth d x))) (conj tmp (first succ))))
+                              (recur (rest succ) d tmp))
+                            [d tmp]))]
+            (recur t1 t2)))
+      d)))
+
 
 (defn closeness [g n]
   "Returns the closeness for node n in graph g")
