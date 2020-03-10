@@ -33,6 +33,6 @@
 ;; of being included in the output sequence.
 
 ;; Quelques tests en plus
-(gen-graph (tools/readfile "/home/elias/Documents/3I020/graphcljskel/src/graphclj/testsgraphe.txt"))
+(gen-graph (tools/readfile "/home/elias/Documents/3I020/graphcljskel/enron_static.csv"))
 (erdos-renyi-rnd 5 0.9)
 

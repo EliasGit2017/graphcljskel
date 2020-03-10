@@ -46,5 +46,3 @@
     (if (seq my-g)
       (recur (rest my-g) (assoc-in res (vector (ffirst my-g) :close) (closeness g (ffirst my-g))))
       res)))
-
-
