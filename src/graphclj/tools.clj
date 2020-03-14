@@ -2,7 +2,6 @@
   (:require [clojure.string :as str]
             [clojure.set :as set]
             [graphclj.centrality :as C]
-            [graphclj.graph :as graph];;à enlever obligatoirement
             [clojure.java.shell :as shell]))
 
 (defn readfile [f]
@@ -50,11 +49,5 @@
               (println "\n------------------------------\n" t1 t2)
               (recur (str res t1) t2 (rest g))))
         (str res "}")))))
-
-;; Commandes système possibles (execution de scripts python par exemple)
-(shell/sh "rm" "view.ps" "graph.dot")
-(write-file (to-dot (graph/gen-graph (readfile "/home/elias/Documents/3I020/graphcljskel/enron_static.csv"))))
-(shell/sh "dot" "-Tps" "/home/elias/Documents/3I020/graphcljskel/graph.dot" "-o" "view.ps")
-(shell/sh "xdg-open" "view.ps")
 
 
