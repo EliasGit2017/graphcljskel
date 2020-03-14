@@ -16,7 +16,7 @@
 ;; Essai avec Parcours en largeur simple (Car les coûts entre les noeuds sont identiques)
 (defn distance [g n]
   "Calculate the distances of one node to all the others"
-  (loop [d (assoc (into [] (take (count (keys g)) (repeat -1))) n 0)
+  (loop [d (assoc (into [] (take (apply max (keys g)) (repeat -1))) n 0)
          F [n]]
     (if (seq F)
       (do (let [x (first F)
