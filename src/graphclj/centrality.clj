@@ -3,7 +3,6 @@
             [clojure.set :as set]))
 
 
-;; Remplacer par quelque chose de meilleur en taille de code et complexité.
 (defn degrees [g]
   "Calculates the degree centrality for each node"
   (loop [my-g g

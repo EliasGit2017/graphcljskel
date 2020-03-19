@@ -1,6 +1,5 @@
 (ns graphclj.graph
-  (:require [clojure.string :as str]
-            [graphclj.tools :as tools]))
+  (:require [clojure.string :as str]))
 
 ;; Generate a graph from the lines
 ;; Il doit certainement il y'avoir une façon plus jolie de faire 

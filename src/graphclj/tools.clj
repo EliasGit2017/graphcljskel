@@ -1,8 +1,7 @@
 (ns graphclj.tools
   (:require [clojure.string :as str]
             [clojure.set :as set]
-            [graphclj.centrality :as C]
-            [clojure.java.shell :as shell]))
+            [graphclj.centrality :as C]))
 
 (defn readfile [f]
   "Returns a sequence from a file f"
@@ -10,6 +9,7 @@
     (doall (line-seq rdr))))
 
 (defn write-file [to-write]
+"Writes the string chain `to-write` in the file /**PATH**/graph.dot which will be used to draw the graph"
   (with-open [w (clojure.java.io/writer  "/home/elias/Documents/3I020/graphcljskel/graph.dot" :append false)]
     (.write w to-write)))
 
@@ -39,14 +39,14 @@
                                        (recur (str res (first nodes) " [style=filled color=\"" (apply str (second (first colors))) "\"]\n\t") (rest colors) (rest nodes))
                                        res)))
            updatedg my-g
-           g my-g]
-      (println res)
+           g (keys my-g)]
+      ;;(println res)
       (if (seq g)
-        (do (let [[t1 t2] (loop [tmpstr "",ug updatedg, to-link (get (get updatedg (ffirst g)) :neigh)]
+        (do (let [[t1 t2] (loop [tmpstr "",ug updatedg, to-link (get (get updatedg (first g)) :neigh)]
                             (if (seq to-link)
-                              (recur (str tmpstr (str (ffirst g)) " -- " (str (first to-link)) "\n\t") (update-in ug (vector (first to-link)) #(assoc % :neigh (set/select (fn [x] (not= (ffirst g) x)) (get % :neigh)))) (rest to-link))
+                              (recur (str tmpstr (str (first g)) " -- " (str (first to-link)) "\n\t") (update-in ug (vector (first to-link)) #(assoc % :neigh (set/select (fn [x] (not= (first g) x)) (get % :neigh)))) (rest to-link))
                               [tmpstr ug]))]
-              (println "\n------------------------------\n" t1 t2)
+              ;;(println "\n------------------------------\n" t1 t2)
               (recur (str res t1) t2 (rest g))))
         (str res "}")))))
 
