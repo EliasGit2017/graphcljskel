@@ -19,7 +19,6 @@
                                      (update-in res (vector b) #(assoc % :neigh (conj (get % :neigh) a)))))))
       res)))
 
-;; ça me semble ok
 (defn erdos-renyi-rnd [n,p]
   "Returns a G_{n,p} random graph, also known as an Erdős-Rényi graph"
   (loop [res {}
@@ -31,8 +30,3 @@
 ;; random-sample -----> The output of random-sample is a sequence.
 ;; Each element of the original collection has probability "prob"
 ;; of being included in the output sequence.
-
-;; Quelques tests en plus
-(gen-graph (tools/readfile "/home/elias/Documents/3I020/graphcljskel/enron_static.csv"))
-(erdos-renyi-rnd 5 0.9)
-
