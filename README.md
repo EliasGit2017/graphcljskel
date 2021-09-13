@@ -1,7 +1,7 @@
 # graphclj
 
-Graph handling in Clojure.
-Basic computations on graphs.
+Graph handling in Clojure.  
+Graph Computations.
 
 ## License
 
